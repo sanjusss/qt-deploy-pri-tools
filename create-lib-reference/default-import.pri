@@ -1,0 +1,3 @@
+﻿LIBS *= -L$$PWD/{0}/ -l{1}
+INCLUDEPATH *= $$PWD/{2}
+DEPENDPATH *= $$PWD/{2}
