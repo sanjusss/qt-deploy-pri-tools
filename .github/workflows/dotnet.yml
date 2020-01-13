@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  pull_request:
+    branches: 'master'
+    paths:
+      - "**"
+      - "!**.MD"
+      - "!LICENSE"
+      - "!.gitignore"
+  push:
+    branches: 'master'
+    tags: 'v*'
+    paths:
+      - "**"
+      - "!**.MD"
+      - "!LICENSE"
+      - "!.gitignore"
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+      
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    
+    - name: Push
+      if: always() && !startsWith(github.event_name, 'pull_request')
+      uses: fnkr/github-action-ghr@v1.2
+      env:
+          GHR_COMPRESS: xz
+          GHR_PATH: qt-build-tools/create-lib-reference/bin/Release/create-lib-reference.exe
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
