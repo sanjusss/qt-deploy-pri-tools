@@ -41,7 +41,7 @@ jobs:
         path: create-lib-reference/bin/Release/create-lib-reference.exe
     
     - name: Upload release
-      if: always() && !startsWith(github.event_name, 'pull_request')
+      if: always() && startsWith(github.ref, 'refs/tags/v')
       uses: yakuhzi/action-release@v1
       with:
         file: create-lib-reference/bin/Release/create-lib-reference.exe
