@@ -35,8 +35,7 @@ jobs:
     
     - name: Push
       if: always() && !startsWith(github.event_name, 'pull_request')
-      uses: fnkr/github-action-ghr@v1.2
-      env:
-          GHR_COMPRESS: xz
-          GHR_PATH: qt-build-tools/create-lib-reference/bin/Release/create-lib-reference.exe
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: create-lib-reference
+        path: create-lib-reference/bin/Release/create-lib-reference.exe
