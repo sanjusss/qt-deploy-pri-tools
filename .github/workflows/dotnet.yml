@@ -61,17 +61,17 @@ jobs:
     - name: Modify pri
       if: always() && !startsWith(github.event_name, 'pull_request')
       run: |
+        ls ./pri
         cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
       shell: bash
         
     - name: Push pri
       if: always() && !startsWith(github.event_name, 'pull_request')
-      working-directory: ./pri
+      working-directory: ./pri/
       shell: bash
       run: |
         git config --local user.email "sanjusss@qq.com"
         git config --local user.name "github-actions"
         git add ./tools/create-lib-reference.exe
         git commit -m "Update create-lib-reference.exe by bot."
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com//sanjusss/qt-deploy-pri
-        git push --progress "origin" master:master
+        git push
