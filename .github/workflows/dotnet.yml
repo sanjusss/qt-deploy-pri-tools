@@ -60,22 +60,8 @@ jobs:
     
     - name: Modify pri
       if: always() && !startsWith(github.event_name, 'pull_request')
-      run: cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
-      shell: bash
-    
-    - name: Commit files
-      if: always() && !startsWith(github.event_name, 'pull_request')
       run: |
-        cd ./src/
-        git config --local user.email "sanjusss@qq.com"
-        git config --local user.name "sanjusss"
-        git commit -m "Update tools by bot." -a
+        ls -l ./pri/tools/
+        cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
+        ls -l ./pri/tools/
       shell: bash
-        
-    - name: Push pri
-      if: always() && !startsWith(github.event_name, 'pull_request')
-      uses: ad-m/github-push-action@v0.5.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: sanjusss/qt-deploy-pri
-        directory: ./src/
