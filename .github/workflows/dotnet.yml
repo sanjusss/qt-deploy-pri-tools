@@ -67,11 +67,9 @@ jobs:
     - name: Push pri
       if: always() && !startsWith(github.event_name, 'pull_request')
       working-directory: ./pri/
-      shell: bash
       run: |
-        git config --local user.email "sanjusss@qq.com"
-        git config --local user.name "github-actions"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/sanjusss/qt-deploy-pri
-        git add ./tools/create-lib-reference.exe
-        git commit -m "Update create-lib-reference.exe by bot."
-        git push
+        "C:\Program Files\Git\bin\git.exe" config --local user.email "sanjusss@qq.com"
+        "C:\Program Files\Git\bin\git.exe" config --local user.name "github-actions"
+        "C:\Program Files\Git\bin\git.exe" add ./tools/create-lib-reference.exe
+        "C:\Program Files\Git\bin\git.exe" commit -m "Update create-lib-reference.exe by bot."
+        "C:\Program Files\Git\bin\git.exe" push
