@@ -63,10 +63,11 @@ jobs:
       run: |
         cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
         cd ./pri/
+        git remote set-url --push origin https://sanjusss:$GITHUB_TOKEN@github.com/sanjusss/qt-deploy-pri
         git config --local user.email "sanjusss@qq.com"
         git config --local user.name "github-actions"
         git commit -am "Update create-lib-reference.exe by bot."
-        git push https://sanjusss:${GITHUB_TOKEN}@github.com/sanjusss/qt-deploy-pri.git
+        git push
       shell: bash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
