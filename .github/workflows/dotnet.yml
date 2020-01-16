@@ -66,7 +66,7 @@ jobs:
         
     - name: Push pri
       if: always() && !startsWith(github.event_name, 'pull_request')
-      working-directory: ./src
+      working-directory: ./pri
       shell: bash
       run: |
         git config --local user.email "sanjusss@qq.com"
