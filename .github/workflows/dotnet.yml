@@ -72,6 +72,7 @@ jobs:
       run: |
         git config --local user.email "sanjusss@qq.com"
         git config --local user.name "github-actions"
+        git remote set-url origin https://{{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/sanjusss/qt-deploy-pri
         git add ./tools/create-lib-reference.exe
         git commit -m "Update create-lib-reference.exe by bot."
         git push
