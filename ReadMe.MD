@@ -21,3 +21,7 @@ create-lib-reference <debug|release> <exe path> <pro path>
 ```cmd
 create-lib-reference <pro path>
 ```
+
+# 未来的计划
+未来打算把这个项目改由批处理脚本或PowerShell脚本实现。  
+欢迎有时间的同学帮忙修改或提出意见。  
