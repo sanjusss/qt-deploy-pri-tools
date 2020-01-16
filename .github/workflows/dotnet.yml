@@ -61,6 +61,7 @@ jobs:
     - name: Modify pri
       if: always() && !startsWith(github.event_name, 'pull_request')
       run: copy /Y src/create-lib-reference/bin/Release/create-lib-reference.exe pri/tools/create-lib-reference.exe
+      shell: cmd
     
     - uses: EndBug/add-and-commit@v2
       if: always() && !startsWith(github.event_name, 'pull_request')
