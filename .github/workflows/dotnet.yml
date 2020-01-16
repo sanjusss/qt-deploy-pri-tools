@@ -57,7 +57,6 @@ jobs:
       with:
         path: "pri"
         repository: sanjusss/qt-deploy-pri
-        token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Modify pri
       if: success() && !startsWith(github.event_name, 'pull_request')
@@ -72,7 +71,9 @@ jobs:
       run: |
         git config --local user.email "sanjusss@qq.com"
         git config --local user.name "github-actions"
-        git remote set-url origin https://{{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/sanjusss/qt-deploy-pri
         git add ./tools/create-lib-reference.exe
         git commit -m "Update create-lib-reference.exe by bot."
-        git push
+        git remote set-url origin https://sanjusss:${GITHUB_TOKEN}@github.com/sanjusss/qt-deploy-pri.git
+        git push -u origin master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
