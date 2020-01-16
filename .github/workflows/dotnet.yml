@@ -61,6 +61,7 @@ jobs:
     - name: Modify pri
       if: always() && !startsWith(github.event_name, 'pull_request')
       run: |
+        ls -l ./src/create-lib-reference/bin/Release/
         ls -l ./pri/tools/
         cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
         ls -l ./pri/tools/
