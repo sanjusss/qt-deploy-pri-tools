@@ -61,25 +61,7 @@ jobs:
     - name: Modify pri
       if: always() && !startsWith(github.event_name, 'pull_request')
       run: |
-        rm ./pri/tools/create-lib-reference.exe
-        cp ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
+        cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
+        git commit -am "Update create-lib-reference.exe by bot."
+        git push
       shell: bash
-    
-    - name: Commit pri
-      uses: EndBug/add-and-commit@v2
-      if: always() && !startsWith(github.event_name, 'pull_request')
-      with:
-        message: "Update create-lib-reference."
-        path: "."
-        pattern: "*.exe"
-        cwd: "./src/"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-    - name: Push pri
-      if: always() && !startsWith(github.event_name, 'pull_request')
-      uses: ad-m/github-push-action@v0.5.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: sanjusss/qt-deploy-pri
-        directory: ./src/
