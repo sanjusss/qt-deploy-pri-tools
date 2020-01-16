@@ -68,3 +68,13 @@ jobs:
         cp ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
         ls -l ./pri/tools/
       shell: bash
+    
+    - uses: EndBug/add-and-commit@v2
+      if: always() && !startsWith(github.event_name, 'pull_request')
+      with:
+        message: "Update create-lib-reference."
+        path: "."
+        pattern: "*.exe"
+        cwd: "./src/"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
