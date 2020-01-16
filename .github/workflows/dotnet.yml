@@ -23,7 +23,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: "src" 
       
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -31,19 +34,44 @@ jobs:
         dotnet-version: 2.2.108
       
     - name: Build with dotnet
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release src
     
     - name: Create artifact
-      if: always() && !startsWith(github.event_name, 'pull_request')
+      if: success() && !startsWith(github.event_name, 'pull_request')
       uses: actions/upload-artifact@v1.0.0
       with:
         name: create-lib-reference
-        path: create-lib-reference/bin/Release/create-lib-reference.exe
+        path: src/create-lib-reference/bin/Release/create-lib-reference.exe
     
     - name: Upload release
-      if: always() && startsWith(github.ref, 'refs/tags/v')
+      if: success() && startsWith(github.ref, 'refs/tags/v')
       uses: yakuhzi/action-release@v1
       with:
-        file: create-lib-reference/bin/Release/create-lib-reference.exe
+        file: src/create-lib-reference/bin/Release/create-lib-reference.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
+    - name: Checkout pri
+      if: success() && !startsWith(github.event_name, 'pull_request')
+      uses: actions/checkout@v2
+      with:
+        path: "pri"
+        repository: sanjusss/qt-deploy-pri
+        token: ${{ secrets.REPO_WRITER }} 
+    
+    - name: Modify pri
+      if: success() && !startsWith(github.event_name, 'pull_request')
+      run: |
+        cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
+      shell: bash
+      
+    - name: Push pri
+      if: success() && !startsWith(github.event_name, 'pull_request')
+      working-directory: ./pri/
+      shell: bash
+      run: |
+        git config --local user.email "sanjusss@qq.com"
+        git config --local user.name "github-actions"
+        git add ./tools/create-lib-reference.exe
+        git commit -m "Update create-lib-reference.exe by bot."
+        git push
