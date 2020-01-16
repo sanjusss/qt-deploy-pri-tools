@@ -64,6 +64,7 @@ jobs:
         ls -l ./src/create-lib-reference/bin/Release/
         ls -l ./pri/tools/
         rm ./pri/tools/create-lib-reference.exe
+        ls -l ./pri/tools/
         cp ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
         ls -l ./pri/tools/
       shell: bash
