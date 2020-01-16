@@ -63,11 +63,10 @@ jobs:
       run: |
         cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
         cd ./pri/
-        git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${GITHUB_TOKEN}"
         git config --local user.email "sanjusss@qq.com"
         git config --local user.name "github-actions"
         git commit -am "Update create-lib-reference.exe by bot."
-        git push
+        git push https://sanjusss:${GITHUB_TOKEN}@github.com/sanjusss/qt-deploy-pri.git
       shell: bash
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
