@@ -61,15 +61,12 @@ jobs:
     - name: Modify pri
       if: always() && !startsWith(github.event_name, 'pull_request')
       run: |
-        ls -l ./src/create-lib-reference/bin/Release/
-        ls -l ./pri/tools/
         rm ./pri/tools/create-lib-reference.exe
-        ls -l ./pri/tools/
         cp ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
-        ls -l ./pri/tools/
       shell: bash
     
-    - uses: EndBug/add-and-commit@v2
+    - name: Commit pri
+      uses: EndBug/add-and-commit@v2
       if: always() && !startsWith(github.event_name, 'pull_request')
       with:
         message: "Update create-lib-reference."
@@ -78,3 +75,11 @@ jobs:
         cwd: "./src/"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Push pri
+      if: always() && !startsWith(github.event_name, 'pull_request')
+      uses: ad-m/github-push-action@v0.5.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository: sanjusss/qt-deploy-pri
+        directory: ./src/
