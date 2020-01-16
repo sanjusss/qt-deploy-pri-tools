@@ -23,7 +23,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         path: "src" 
       
@@ -49,3 +50,24 @@ jobs:
         file: src/create-lib-reference/bin/Release/create-lib-reference.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
+    - name: Checkout pri
+      if: always() && !startsWith(github.event_name, 'pull_request')
+      uses: actions/checkout@v2
+      with:
+        path: "pri"
+        repository: sanjusss/qt-deploy-pri
+    
+    - name: Modify pri
+      if: always() && !startsWith(github.event_name, 'pull_request')
+      run: copy /Y src/create-lib-reference/bin/Release/create-lib-reference.exe pri/tools/create-lib-reference.exe
+    
+    - uses: EndBug/add-and-commit@v2
+      if: always() && !startsWith(github.event_name, 'pull_request')
+      with:
+        message: "Update create-lib-reference."
+        path: "."
+        pattern: "*.exe"
+        cwd: "./src/"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
