@@ -62,6 +62,7 @@ jobs:
       if: always() && !startsWith(github.event_name, 'pull_request')
       run: |
         cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
+        cd ./pri/
         git commit -am "Update create-lib-reference.exe by bot."
         git push
       shell: bash
