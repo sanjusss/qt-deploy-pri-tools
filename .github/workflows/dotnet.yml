@@ -20,7 +20,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -63,13 +63,3 @@ jobs:
       run: |
         cp -f ./src/create-lib-reference/bin/Release/create-lib-reference.exe ./pri/tools/
       shell: bash
-        
-    - name: Push pri
-      if: always() && !startsWith(github.event_name, 'pull_request')
-      working-directory: ./pri/
-      run: |
-        "C:\Program Files\Git\bin\git.exe" config --local user.email "sanjusss@qq.com"
-        "C:\Program Files\Git\bin\git.exe" config --local user.name "github-actions"
-        "C:\Program Files\Git\bin\git.exe" add ./tools/create-lib-reference.exe
-        "C:\Program Files\Git\bin\git.exe" commit -m "Update create-lib-reference.exe by bot."
-        "C:\Program Files\Git\bin\git.exe" push
